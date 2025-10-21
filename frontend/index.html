@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+		integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="./assets/css/style.css">
+	<title>The Social App</title>
+</head>
+
+<body>
+	<main>
+		<div class="container" id="container">
+			<div class="form-container sign-up-container">
+				<form id="register_form" method="POST">
+					<h1>Criar uma conta
+						<i id="mode_icon_register" class="fa-solid fa-moon"></i>
+					</h1>
+
+					<div class="social-container">
+						<div>
+							<a href="#">
+								<img src="assets/imgs/Facebook.png" alt="Facebook logo" /></a>
+						</div>
+
+						<div>
+							<a href="#">
+								<img src="assets/imgs/Google.png" alt="Google logo" /></a>
+						</div>
+
+						<div>
+							<a href="#">
+								<img src="assets/imgs/Github.png" alt="Github logo" /></a>
+						</div>
+
+
+					</div>
+					<span>ou use seu email para se cadastrar</span>
+
+					<div id="input-fields" class="input-fields">
+
+						<label for="name">
+							<div class="input-field">
+								<i class="fa-solid fa-user"></i>
+								<input type="text" id="name" name="name" placeholder="Nome" required>
+							</div>
+						</label>
+
+						<label for="userEmail">
+							<div class="input-field">
+								<i class="fa-solid fa-envelope"></i>
+								<input type="text" id="userEmail" name="userEmail" placeholder="E-mail" required>
+							</div>
+						</label>
+
+						<label for="password">
+							<div class="input-field">
+								<i class="fa-solid fa-lock"></i>
+								<input type="password" id="password" name="password" placeholder="Senha" required>
+							</div>
+						</label>
+
+					</div>
+					<div class="buttons">
+						<button type="submit" id="register_button">
+							Criar uma conta
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="form-container sign-in-container">
+				<form id="login_form" method="POST">
+					<h1 class="title">The Social App
+						<i id="mode_icon_login" class="fa-solid fa-moon"></i>
+					</h1>
+
+					<div class="social-container" , id="social-container">
+						<div>
+							<a href="#">
+								<img src="assets/imgs/Facebook.png" alt="Facebook logo" /></a>
+						</div>
+
+						<div>
+							<a href="#">
+								<img src="assets/imgs/Google.png" alt="Google logo" /></a>
+						</div>
+
+						<div>
+							<a href="#">
+								<img src="assets/imgs/Github.png" alt="Github logo" /></a>
+						</div>
+
+
+					</div>
+
+					<div id="input-fields" class="input-fields">
+
+						<label for="userEmail">
+							<div class="input-field">
+								<i class="fa-solid fa-envelope"></i>
+								<input type="text" id="userEmail" name="userEmail" placeholder="E-mail" required>
+							</div>
+						</label>
+
+						<label for="password">
+							<div class="input-field">
+								<i class="fa-solid fa-lock"></i>
+								<input type="password" id="password" name="password" placeholder="Senha" required>
+							</div>
+						</label>
+
+					</div>
+					<div class="buttons">
+						<button type="submit" id="login_button">
+							Efetuar login
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="overlay-container">
+				<div class="overlay">
+					<div class="overlay-panel overlay-left">
+						<h1>Bem vindo de volta!</h1>
+						<p>Para se manter conectado, insira seus dados pessoais</p>
+						<button class="ghost" id="signIn">Entrar</button>
+					</div>
+					<div class="overlay-panel overlay-right">
+						<h1>Seja bem vindo! Vamos começar?</h1>
+						<p>Para isso, insira seus dados para criar uma nova conta</p>
+						<button class="ghost" id="signUp">Cadastrar-se</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+	<script type="text/javascript" src="assets/js/script.js"></script>
+</body>
+
+</html>

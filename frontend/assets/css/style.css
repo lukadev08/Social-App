@@ -1,0 +1,366 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins%3Awght%40100%3B200%3B300%3B400&display=swap%27%29%3B);
+
+:root {
+	--color-light-50: #f7f7f7;
+
+	--color-dark-50: #797984;
+	--color-dark-100: #1e1e25;
+	--color-dark-900: #000;
+
+	--color-purple-50: #000000;
+	--color-purple-100: #4e0f8a;
+	--color-purple-200: #922cd6;
+
+	--color-button-50: #7c4aed;
+	--color-button-100: #a855f7;
+	--color-button-200: #bf46ef;
+
+	--color-gradient: linear-gradient(125deg,
+			var(--color-purple-50),
+			var(--color-purple-100),
+			var(--color-purple-200));
+
+	--color-gradient-button: linear-gradient(315deg,
+			var(--color-button-50),
+			var(--color-button-100),
+			var(--color-button-200));
+}
+
+* {
+	font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-color: #000;
+}
+
+body {
+	background: #f6f5f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	height: 100vh;
+	margin: -20px 0 50px;
+}
+
+h1 {
+	font-weight: bold;
+	margin: 0;
+	font-size: 30px;
+}
+
+h2 {
+	text-align: center;
+}
+
+p {
+	font-size: 14px;
+	font-weight: 100;
+	line-height: 20px;
+	letter-spacing: 0.5px;
+	margin: 20px 0 30px;
+}
+
+span {
+	font-size: 12px;
+	margin-bottom: 7px;
+}
+
+a {
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 15px 0;
+}
+
+
+form {
+	background-color: var(--color-light-50);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	height: 100%;
+	text-align: center;
+}
+
+button {
+	border-radius: 20px;
+	border: 1px solid var(--color-purple-200);
+	background: var(--color-gradient-button);
+  	color: var(--color-light-50);
+	font-size: 12px;
+	font-weight: bold;
+	padding: 12px 45px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+	cursor: pointer;
+  	box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.336);
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+button:active {
+	transform: scale(0.99);
+}
+
+button:focus {
+	outline: none;
+}
+
+button.ghost {
+	background-color: transparent;
+	border-color: var(--color-light-50);
+}
+
+.input-field {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	padding: 3px;
+	cursor: text;
+	box-shadow: 1px 3px 10px rgba(58, 58, 58, 0.336);
+	margin-bottom: 25px;
+}
+
+.input-field, #input-fields input {
+	border: none;
+	background-color: transparent;
+	width: 260px;
+	font-size: 16px;
+	padding: 2px 10px;
+	border-radius: 10px;
+}
+
+.input-field input:focus {
+	outline: none;
+}
+
+.input-fields label {
+	font-size: 12px;
+	color: #222;
+}
+
+.input-fields i {
+	font-size: 12px;
+	color: var(--color-dark-900);
+}
+
+.container {
+	background-color: var(--color-light-50);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+		0 10px 10px rgba(0, 0, 0, 0.22);
+	position: relative;
+	overflow: hidden;
+	width: 768px;
+	max-width: 100%;
+	min-height: 480px;
+}
+
+.form-container {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	transition: all 0.6s ease-in-out;
+}
+
+.sign-in-container {
+	left: 0;
+	width: 50%;
+	z-index: 2;
+}
+
+.container.right-panel-active .sign-in-container {
+	transform: translateX(100%);
+}
+
+.sign-up-container {
+	left: 0;
+	width: 50%;
+	opacity: 0;
+	z-index: 1;
+}
+
+.container.right-panel-active .sign-up-container {
+	transform: translateX(100%);
+	opacity: 1;
+	z-index: 5;
+	animation: show 0.6s;
+}
+
+@keyframes show {
+
+	0%,
+	49.99% {
+		opacity: 0;
+		z-index: 1;
+	}
+
+	50%,
+	100% {
+		opacity: 1;
+		z-index: 5;
+	}
+}
+
+.overlay-container {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 50%;
+	height: 100%;
+	overflow: hidden;
+	transition: transform 0.6s ease-in-out;
+	z-index: 100;
+}
+
+.container.right-panel-active .overlay-container {
+	transform: translateX(-100%);
+}
+
+.overlay {
+	background: var(--color-purple-100);
+	background: -webkit-linear-gradient(to right, var(--color-purple-200), var(--color-purple-100));
+	background: linear-gradient(to right, var(--color-purple-200), var(--color-purple-100));
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
+	color: var(--color-light-50);
+	position: relative;
+	left: -100%;
+	height: 100%;
+	width: 200%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+.container.right-panel-active .overlay {
+	transform: translateX(50%);
+}
+
+.overlay-panel {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 40px;
+	text-align: center;
+	top: 0;
+	height: 100%;
+	width: 50%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left {
+	transform: translateX(-20%);
+}
+
+.container.right-panel-active .overlay-left {
+	transform: translateX(0);
+}
+
+.overlay-right {
+	right: 0;
+	transform: translateX(0);
+}
+
+.container.right-panel-active .overlay-right {
+	transform: translateX(20%);
+}
+
+.social-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 1rem;
+	margin: 20px 0;
+	justify-content: space-around;
+
+}
+
+.social-container img {
+	width: 40px;
+	box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.336);
+	border-radius: 20px;
+}
+
+img:hover {
+	transform: scale(0.95);
+}
+
+.social-container a {
+	border-radius: 50%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 5px;
+	height: 40px;
+	width: 40px;
+}
+
+.fa-envelope {
+  margin-left: 0.5rem;
+}
+
+.fa-user {
+  margin-left: 0.5rem;
+}
+
+.fa-lock {
+  margin-left: 0.5rem;
+}
+
+#mode_icon_register, #mode_icon_login {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.dark#login_form, .dark#register_form {
+	color: var(--color-light-50);
+	background-color: var(--color-dark-100);
+	animation: light-to-dark 0.3s ease-in-out;
+}
+
+#login_form, #register_form {
+	color: var(--color-dark-100);
+	background-color: var(--color-light-50);
+	animation: dark-to-light 0.3s ease-in-out;
+}
+
+.dark#login_form .input-field input,
+.dark#login_form .input-field i,
+.dark#login_form label,
+.dark#register_form .input-field input,
+.dark#register_form .input-field i,
+.dark#login_form label {
+  color: var(--color-light-50);
+}
+
+
+@keyframes dark-to-light {
+  0% {
+    background-color: var(--color-dark-100);
+  }
+
+  100% {
+    background-color: var(--color-light-50);
+  }
+}
+
+@keyframes light-to-dark {
+  0% {
+    background-color: var(--color-light-50);
+  }
+
+  100% {
+    background-color: var(--color-dark-100);
+  }
+
+}
