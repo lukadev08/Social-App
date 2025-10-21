@@ -15,7 +15,7 @@ Aplicação de uma rede social com fluxo de cadastro e login. Após o cadastro e
 1. Java 24 instalado (JDK 24).  
 2. Maven instalado (ou usar o wrapper presente: mvnw)
 3. Clonar o repositório:
-    - git clone <URL-do-repositório>
+    - git clone <https://github.com/lukadev08/Social-App>
 4. Pode ser necessário configurar algumas variáveis de ambiente (como portas locais).
 
 ## Como executar
