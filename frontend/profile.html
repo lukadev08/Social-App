@@ -9,29 +9,74 @@
     <title>Document</title>
 </head>
 
-<body> 
-        <div class="container" id="container">
-            <div class="profile-card js-profile-card">
-                <div class="profile-card__img">
-                    <img src="./assets/imgs/profile-pic.jpg" alt="Imagem Perfil">
+<body>
+
+    <div class="animated-background"></div>
+    
+    <div class="container" id="container">
+        <div class="profile-card js-profile-card">
+            <div class="profile-card__img">
+                <img src="./assets/imgs/profile-pic.jpg" alt="Imagem Perfil">
+            </div>
+        </div>
+
+        <div class="profile-container">
+
+            <div class="profile-card_cntc">
+                <div class="profile-name"> 
+                    <span id="userName"></span>
+                </div>
+                <div class="profile-desc"> Usuário mais daora dessa rede social</div>
+
+                <div class="profile-card-loc">
+                    <span class="profile-card-loc">
+                        <sgv class="icon">
+                            <img src="/frontend/assets/imgs/location-icon.svg" alt="">
+                        </sgv>
+                    </span>
+
+                    <span class="profile-card-loc__txt">
+                        Gatolandia, Brazil
+                    </span>
                 </div>
 
-            </div>
-
-            <div class="profile-container">
-                
-                <div class="profile-card_cntc">
-                        <div class="profile-name"> Nome Pessoa</div>
-                        <div class="profile-desc"> Gato mais daora</div>
-
+                <div class="profile-card-inf">
+                    <div class="profile-card-inf__item">
+                        <div class="profile-card-inf__title">Confiavel</div>
+                        <div class="profile-card-inf__img">
+                            <img src="/frontend/assets/imgs/happy.gif" alt="">
+                        </div>
                     </div>
 
-                    <div class="social-container">
+                    <div class="profile-card-inf__item">
+                        <div class="profile-card-inf__title">Legal</div>
+                        <div class="profile-card-inf__img">
+                            <img src="/frontend/assets/imgs/diamond.gif" alt="">
+                        </div>
                     </div>
+
+                    <div class="profile-card-inf__item">
+                        <div class="profile-card-inf__title">Sexy</div>
+                        <div class="profile-card-inf__img">
+                            <img src="/frontend/assets/imgs/heart.gif" alt="">
+                        </div>
+                    </div>
+
+                    <div class="profile-card-inf__item">
+                        <div class="profile-card-inf__title follower-count">Seguidores</div>
+                        <div class="profile-card-inf__txt">10.377</div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="social-container">
+                </div>
 
             </div>
         </div>
 
 </body>
-
+<script type="text/javascript" src="assets/js/profile.js"></script>
 </html>

@@ -10,19 +10,19 @@ signInButton.addEventListener('click', () => {
     container.classList.remove("right-panel-active");
 });
 
-const mode = document.getElementById('mode_icon_login');
+const login_mode = document.getElementById('mode_icon_login');
 
-mode.addEventListener('click', () => {
+login_mode.addEventListener('click', () => {
     const form = document.getElementById('login_form');
-    if (mode.classList.contains('fa-moon')) {
-        mode.classList.remove('fa-moon');
-        mode.classList.add('fa-sun');
+    if (login_mode.classList.contains('fa-moon')) {
+        login_mode.classList.remove('fa-moon');
+        login_mode.classList.add('fa-sun');
 
         form.classList.add('dark');
         return;
     }
-    mode.classList.add('fa-moon');
-    mode.classList.remove('fa-sun');
+    login_mode.classList.add('fa-moon');
+    login_mode.classList.remove('fa-sun');
     form.classList.remove('dark');
 });
 
@@ -102,17 +102,14 @@ document.addEventListener('DOMContentLoaded', function () {
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        // Captura os valores do formulário
         const userEmail = document.getElementById('userEmail').value;
         const password = document.getElementById('password').value;
 
-        // Referência ao botão para feedback visual
         const button = document.getElementById('login_button');
         button.classList.add('sending');
         button.textContent = 'Logando...';
         button.disabled = true;
 
-        // Faz a requisição de login para o backend
         fetch('http://127.0.0.1:8081/login/retrieve', {
             method: 'POST',
             headers: {
@@ -122,48 +119,36 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify({ userEmail, password })
         })
             .then(response => {
-                // Verifica se a resposta foi bem-sucedida
                 if (response.ok) {
-                    return response.json(); // Espera receber dados do usuário em JSON
+                    return response.json();
                 } else {
-                    // Se falhou, lança um erro que será capturado pelo catch
                     throw new Error('Credenciais inválidas');
                 }
             })
             .then(userData => {
-                // Login bem-sucedido! userData deve conter informações como nome e email
                 console.log('Login realizado com sucesso:', userData);
                 
-                // Armazena os dados do usuário para usar na próxima página
-                // Nota: localStorage é usado aqui, mas você mencionou que não pode usar
-                // Alternativa: passar dados via URL ou sessionStorage se disponível
                 localStorage.setItem('userName', userData.name);
                 localStorage.setItem('userEmail', userData.email);
                 
-                // Feedback visual de sucesso
                 button.classList.remove('sending');
                 button.classList.add('success');
                 button.textContent = 'Sucesso!';
                 
-                // Redireciona para a página de perfil após 1 segundo
                 setTimeout(() => {
-                    window.location.href = 'profile.html'; // Página que mostrará os dados
+                    window.location.href = 'profile.html'; 
                 }, 1000);
             })
             .catch(error => {
-                // Trata erros de login
                 console.error('Erro no login:', error);
                 
-                // Remove o estado de carregamento e mostra erro
                 button.classList.remove('sending');
                 button.classList.add('error');
                 button.textContent = 'Erro no login';
                 button.disabled = false;
                 
-                // Exibe mensagem de erro ao usuário
                 alert('Email ou senha incorretos. Tente novamente.');
                 
-                // Retorna o botão ao estado normal após 2 segundos
                 setTimeout(() => {
                     button.classList.remove('error');
                     button.textContent = 'Entrar';
