@@ -122,10 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const userEmail = document.getElementById('login_userEmail').value.trim();
         const password = document.getElementById('login_password').value;
 
-        button.classList.add('sending');
-        button.textContent = 'Logando...';
-        button.disabled = true;
-
         try {
             const response = await fetch('http://127.0.0.1:8080/auth/login', {
                 method: 'POST',
@@ -152,23 +148,29 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('token', userData.token);
             localStorage.setItem('userEmail', userData.userEmail || userEmail);
 
-            button.classList.remove('sending');
-            button.classList.add('success');
-            button.textContent = 'Sucesso!';
-
+            setTimeout(() => {
+                button.classList.add('sending');
+                button.textContent = 'Logando...';
+                button.disabled = true;
+            }, 1000);
+            setTimeout(() => {
+                button.classList.remove('sending');
+                button.classList.add('success');
+                button.textContent = 'Sucesso!';
+            }, 3000);
             setTimeout(() => {
                 window.location.href = 'profile.html';
-            }, 2000);
+            }, 5000);
 
         } catch (error) {
             console.error('Erro no login:', error);
-            
+
             button.classList.remove('sending');
             button.classList.add('error');
             button.textContent = 'Erro no login';
-            
+
             alert(error.message || 'Erro durante o login. Tente novamente.');
-            
+
             setTimeout(resetButton, 4000);
         }
     });
