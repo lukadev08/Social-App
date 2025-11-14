@@ -33,3 +33,6 @@ build/
 .vscode/
 
 *.yaml
+*.idea
+*.settings
+*.vscode
