@@ -1,82 +1,31 @@
 package com.backend.app.service;
 
+import com.backend.app.exception.DataNotFoundException;
+import com.backend.app.model.User;
+import com.backend.app.model.domain.LoginRequest;
+import com.backend.app.model.domain.LoginResponse;
+import com.backend.app.model.domain.RegisterRequest;
+import com.backend.app.model.domain.RegisterResponse;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
-import com.backend.app.exception.DataNotFoundException;
-import com.backend.app.model.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+public interface UserService {
 
-import com.backend.app.model.User;
-import com.backend.app.repository.UserRepository;
+    public User findUserById(Long id) throws DataNotFoundException;
 
-@Service
-public class UserService {
+    public List<User> findAllUsers();
 
-    @Autowired
-    private UserRepository userRepository;
+    public void deleteUserById(Long id);
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public User findByEmail(String email);
 
-    protected BCryptPasswordEncoder getPasswordEncoder() {
-        if (passwordEncoder == null ) {
-            passwordEncoder = new BCryptPasswordEncoder();
-        }
-        return passwordEncoder ;
-    }
+    public void updateUserById(Long id, User user) throws DataNotFoundException;
 
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
+    public RegisterResponse register(RegisterRequest request) throws DataNotFoundException;
 
-    public User findUserById(Long id) throws DataNotFoundException {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
-    }
-
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    public User findByEmail(String email) {
-        return userRepository.findByUserEmail(email).orElse(null);
-    }
-
-    public void updateUserById(Long id, User user) throws DataNotFoundException {
-        User userToUpdate = userRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Usuário não encontrado"));
-
-        User userUpdated = User.builder()
-                .name(user.getName() != null ? user.getName() : userToUpdate.getName())
-                .userEmail(user.getUserEmail() != null ? user.getUserEmail() : userToUpdate.getUserEmail()).build();
-        userRepository.saveAndFlush(userUpdated);
-
-    }
-
-    public User mapToUser(UserDTO dto) {
-        return new User(dto.id(),
-                dto.name(),
-                dto.password(),
-                dto.userEmail());
-    }
-
-    public User transformToUser(UserDTO dto) {
-        return mapToUser(dto);
-    }
-
-    public void encodePassword(User user) {
-        String encodePassword = getPasswordEncoder().encode(user.getPassword());
-        user.setPassword(encodePassword);
-    }
-
-    public boolean checkPassword(String rawPassword, String encodedPassword) {
-        return getPasswordEncoder().matches(rawPassword, encodedPassword);
-    }
-
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+    public LoginResponse login(LoginRequest request);
 }

@@ -1,18 +1,22 @@
 package com.backend.app.model;
 
-import jakarta.annotation.Nullable;
+import com.backend.app.model.domain.UserRoles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "tb_users")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class User {
+
+    public User(String name, String password, String userEmail) {
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +34,7 @@ public class User {
     @NotNull
     private String userEmail;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + getName() + '\'' +
-                ", userEmail='" + getUserEmail() + '\'' +
-                '}';
-    }
+    @Enumerated(EnumType.STRING)
+    private UserRoles roles;
+
 }

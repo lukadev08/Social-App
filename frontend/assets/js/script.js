@@ -52,36 +52,41 @@ document.addEventListener('DOMContentLoaded', function () {
         const userEmail = document.getElementById('userEmail').value;
         const password = document.getElementById('password').value;
 
-        const button = document.getElementById('register_button');
-        button.classList.add('sending');
-        button.textContent = 'Enviando...';
-        button.disabled = true
+        const fieldIds = ['name', 'userEmail', 'password']
 
-        fetch('http://127.0.0.1:8081/register/create', {
+        const button = document.getElementById('register_button');
+
+        fetch('http://127.0.0.1:8080/auth/register', {
             method: 'POST',
             statusCode: 200,
             headers: {
-                'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
+                'Access-Control-Allow-Origin': '*'
             },
+            credentials: "include",
             body: JSON.stringify({ name, userEmail, password })
         })
             .then(response => {
                 if (response.ok) {
                     return response.text(console.log('Cadastrado com sucesso'));
                 } else {
-                    throw new Error(alert('Erro ao cadastrar usuário'));
+                    throw new Error(alert('Erro ao cadastrar usuário: usuário já cadastrado'));
                 }
             })
-            .then(data => {
+            .then(userData => {
                 button.classList.remove('sending');
-                if (typeof data === 'string') {
-                    console.log(data);
+                if (typeof userData === 'string') {
+                    console.log(userData);
                 } else {
-                    alert(data.message);
+                    alert(userData.message);
                 }
+
+                const user = {
+                    name: name,
+                    email: userEmail,
+                };
+
+                localStorage.setItem('user', JSON.stringify(user));
 
                 setTimeout(() => {
                     button.classList.add('success');
@@ -91,6 +96,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     button.classList.remove('success');
                     button.textContent = 'Criar uma conta';
                 }, 2000);
+                setTimeout(() => {
+                    fieldIds.forEach(id => {
+                        document.getElementById(id).value = '';
+                    });
+                }, 3000);
             })
             .catch(error => console.error('Erro no cadastro:', error));
     });
@@ -98,61 +108,68 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('login_form');
-    
-    loginForm.addEventListener('submit', function (event) {
+    const button = document.getElementById('login_button');
+
+    const resetButton = () => {
+        button.classList.remove('sending', 'success', 'error');
+        button.textContent = 'Entrar';
+        button.disabled = false;
+    };
+
+    loginForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        const userEmail = document.getElementById('userEmail').value;
-        const password = document.getElementById('password').value;
+        const userEmail = document.getElementById('login_userEmail').value.trim();
+        const password = document.getElementById('login_password').value;
 
-        const button = document.getElementById('login_button');
         button.classList.add('sending');
         button.textContent = 'Logando...';
         button.disabled = true;
 
-        fetch('http://127.0.0.1:8081/login/retrieve', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ userEmail, password })
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Credenciais inválidas');
-                }
-            })
-            .then(userData => {
-                console.log('Login realizado com sucesso:', userData);
-                
-                localStorage.setItem('userName', userData.name);
-                localStorage.setItem('userEmail', userData.email);
-                
-                button.classList.remove('sending');
-                button.classList.add('success');
-                button.textContent = 'Sucesso!';
-                
-                setTimeout(() => {
-                    window.location.href = 'profile.html'; 
-                }, 1000);
-            })
-            .catch(error => {
-                console.error('Erro no login:', error);
-                
-                button.classList.remove('sending');
-                button.classList.add('error');
-                button.textContent = 'Erro no login';
-                button.disabled = false;
-                
-                alert('Email ou senha incorretos. Tente novamente.');
-                
-                setTimeout(() => {
-                    button.classList.remove('error');
-                    button.textContent = 'Entrar';
-                }, 2000);
+        try {
+            const response = await fetch('http://127.0.0.1:8080/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                credentials: "include",
+                body: JSON.stringify({ userEmail, password })
             });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => null);
+                const message = errorData?.message || `Erro ${response.status}: ${response.statusText}`;
+                throw new Error(message);
+            }
+
+            const userData = await response.json();
+
+            if (!userData?.token) {
+                throw new Error('Resposta inválida do servidor');
+            }
+
+            localStorage.setItem('token', userData.token);
+            localStorage.setItem('userEmail', userData.userEmail || userEmail);
+
+            button.classList.remove('sending');
+            button.classList.add('success');
+            button.textContent = 'Sucesso!';
+
+            setTimeout(() => {
+                window.location.href = 'profile.html';
+            }, 2000);
+
+        } catch (error) {
+            console.error('Erro no login:', error);
+            
+            button.classList.remove('sending');
+            button.classList.add('error');
+            button.textContent = 'Erro no login';
+            
+            alert(error.message || 'Erro durante o login. Tente novamente.');
+            
+            setTimeout(resetButton, 4000);
+        }
     });
 });
