@@ -26,7 +26,9 @@ Com Maven:
 - java -jar target/*.jar
 ou
 - mvn spring-boot:runr
+  
 Com Intellij + VSCode:
+- Importar o projeto via pom.xml
 - Compilar o projeto (ou utilizar o Maven clean + install)
 - Executar pelo hotEnd da IDE (Run)
 - No VSCode executar pelo Go Live da extensão Live Server (na porta 127.0.0.1:5501)
